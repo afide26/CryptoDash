@@ -21,7 +21,13 @@ const ControlButtonElem = styled.div`
 `;
 
 function ControlButton({ name, active }) {
-  return <ControlButtonElem active={active}>{name}</ControlButtonElem>;
+  return (
+    <ControlButtonElem active={active}>{toProperCase(name)}</ControlButtonElem>
+  );
+}
+
+function toProperCase(lower) {
+  return lower.charAt(0).toUpperCase() + lower.substr(1);
 }
 export default function() {
   return (
