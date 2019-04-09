@@ -1,26 +1,16 @@
 import React, { Component } from "react";
 import "./App.css";
-import styled, { css } from "styled-components";
-
+import AppLayout from "./AppLayout";
+import AppBar from "./AppBar";
 import Welcome from "./WelcomeMessage";
 
-const MyButton = styled.div`
-  color: green;
-
-  ${props =>
-    props.red &&
-    css`
-      color: palevioletred;
-    `}
-`;
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <AppLayout>
+        <AppBar />
         <Welcome />
-        <MyButton>Green</MyButton>
-        <MyButton red>PalevioletRed</MyButton>
-      </div>
+      </AppLayout>
     );
   }
 }
