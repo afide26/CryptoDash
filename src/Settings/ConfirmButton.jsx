@@ -26,7 +26,7 @@ export default function() {
       {({ confirmFavorites }) => {
         return (
           <ConfirmButton onClick={confirmFavorites}>
-            ConfirmFavorites
+            Save Your Favorite Coins
           </ConfirmButton>
         );
       }}
