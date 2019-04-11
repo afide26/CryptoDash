@@ -14,10 +14,11 @@ export class AppProvider extends React.Component {
 
   componentDidMount() {
     this.fetchCoins();
+    console.log(this.state);
   }
 
   fetchCoins = async () => {
-    let coinList = await cc.coinList();
+    let coinList = (await cc.coinList()).Data;
     this.setState({ coinList });
   };
   confirmFavorites = () => {
