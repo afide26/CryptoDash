@@ -1,18 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import { AppContext } from "../App/AppProvider";
-
+import { fontSize1, greenBoxShadow, fontColorGreen } from "./Styles";
 const ConfirmButton = styled.button`
   margin: 20px auto;
-  color: white;
-  cursor: pointer;
-  border: none;
-  font-size: 1em;
-  padding: 5px 15px;
-  border-radius: 20px;
-  background-color: green;
+  background: none;
+  ${fontColorGreen}
   display: block;
-  outline: none;
+  margin: 0 auto;
+  ${fontSize1}
+  &:hover {
+    ${greenBoxShadow}
+  }
 `;
 
 export const CenterDiv = styled.div`
