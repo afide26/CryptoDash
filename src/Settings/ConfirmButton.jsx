@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { AppContext } from "../App/AppProvider";
-import { fontSize1, greenBoxShadow, fontColorGreen } from "./Styles";
+import { fontSize1, greenBoxShadow, color3 } from "./Styles";
 const ConfirmButton = styled.button`
-  margin: 20px auto;
-  background: none;
-  ${fontColorGreen}
-  display: block;
-  margin: 0 auto;
+  font-family:'Do Hyeon', sans-serif;
+  margin: 20px;
+  border:0;
+  background:transparent;
+  color:${color3}
+  padding:8px;
+  border-radius:10px;
   ${fontSize1}
   &:hover {
     ${greenBoxShadow}
@@ -24,9 +26,11 @@ export default function() {
     <AppContext.Consumer>
       {({ confirmFavorites }) => {
         return (
-          <ConfirmButton onClick={confirmFavorites}>
-            Save Your Favorite Coins
-          </ConfirmButton>
+          <CenterDiv>
+            <ConfirmButton onClick={confirmFavorites}>
+              Save Your Favorite Coins
+            </ConfirmButton>
+          </CenterDiv>
         );
       }}
     </AppContext.Consumer>
