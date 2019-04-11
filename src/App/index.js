@@ -3,7 +3,6 @@ import "./App.css";
 import AppLayout from "./AppLayout";
 import AppBar from "./AppBar";
 import Settings from "../Settings";
-import ConfirmButton from "../Settings/ConfirmButton";
 import { AppProvider } from "./AppProvider";
 
 class App extends Component {
@@ -13,7 +12,6 @@ class App extends Component {
         <AppProvider>
           <AppBar />
           <Settings />
-          <ConfirmButton />
         </AppProvider>
       </AppLayout>
     );
