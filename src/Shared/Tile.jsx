@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {
-  fontSize1,
+  fontSize2,
   subtleBoxShadow,
   lightBlueBackground,
   greenBoxShadow,
@@ -8,7 +8,7 @@ import {
 } from "../Settings/Styles";
 
 export const Tile = styled.div`
-  ${fontSize1}
+  ${fontSize2}
   padding: 10px;
   text-align: left;
   ${subtleBoxShadow}
