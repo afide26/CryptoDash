@@ -9,8 +9,8 @@ export class AppProvider extends React.Component {
     super(props);
     this.state = {
       page: "settings",
-      ...this.savedSettings(),
       favorites: ["BTC", "ETH", "XMR", "ETC", "DOGE"],
+      ...this.savedSettings(),
       setPage: this.setPage,
       confirmFavorites: this.confirmFavorites,
       addCoin: this.addCoin,
@@ -56,14 +56,19 @@ export class AppProvider extends React.Component {
 
     localStorage.setItem(
       "cryptodash",
-      JSON.stringify({ test: "hello", firstVisit: true })
+      JSON.stringify({ favorites: this.state.favorites })
     );
   };
   setPage = page => this.setState({ page });
 
   savedSettings = () => {
     let cryptoDashData = localStorage.getItem("cryptodash");
-    return !cryptoDashData ? { page: "settings", firstVisit: true } : {};
+    if (!cryptoDashData) {
+      return { page: "settings", firstVisit: true };
+    }
+    // Override the default favorites
+    let { favorites } = JSON.parse(cryptoDashData);
+    return { favorites };
   };
 
   render() {
