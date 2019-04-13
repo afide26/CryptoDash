@@ -14,7 +14,8 @@ export class AppProvider extends React.Component {
       setPage: this.setPage,
       confirmFavorites: this.confirmFavorites,
       addCoin: this.addCoin,
-      removeCoin: this.removeCoin
+      removeCoin: this.removeCoin,
+      isInFavorites: this.isInFavorites
     };
   }
 
@@ -30,9 +31,6 @@ export class AppProvider extends React.Component {
     if (favorites.length < MAX_COIN && favorites.indexOf(key) === -1) {
       favorites.push(key);
       this.setState({ favorites });
-    } else if (favorites.indexOf(key) !== -1) {
-      alert("The coin is already in your list of favorites");
-      return favorites;
     } else if (favorites.length >= MAX_COIN) {
       alert("You already reached the limit of coins to save as favorites");
       return favorites;
@@ -43,6 +41,9 @@ export class AppProvider extends React.Component {
     let favorites = [...this.state.favorites];
     this.setState({ favorites: _.pull(favorites, key) });
   };
+
+  isInFavorites = key => _.includes(this.state.favorites, key);
+
   fetchCoins = async () => {
     let coinList = (await cc.coinList()).Data;
     this.setState({ coinList });
