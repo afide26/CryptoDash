@@ -10,12 +10,11 @@ export class AppProvider extends React.Component {
     this.state = {
       page: "settings",
       ...this.savedSettings(),
-      favorites: [],
+      favorites: ["BTC", "ETH", "XMR", "ETC", "DOGE"],
       setPage: this.setPage,
       confirmFavorites: this.confirmFavorites,
       addCoin: this.addCoin,
-      removeCoin: this.removeCoin,
-      isInFavorites: this.isInFavorites
+      removeCoin: this.removeCoin
     };
   }
 
@@ -31,21 +30,19 @@ export class AppProvider extends React.Component {
     if (favorites.length < MAX_COIN && favorites.indexOf(key) === -1) {
       favorites.push(key);
       this.setState({ favorites });
+    } else if (favorites.indexOf(key) !== -1) {
+      alert("The coin is already in your list of favorites");
+      return favorites;
     } else if (favorites.length >= MAX_COIN) {
-      alert("You can only save 10 coins as favorites");
+      alert("You already reached the limit of coins to save as favorites");
       return favorites;
     }
   };
-
-  // Custom Function to avoid duplication of coins in favorites
-  // Invoke this function in CoinTile
-  isInFavorites = key => _.includes([...this.state.favorites], key);
 
   removeCoin = key => {
     let favorites = [...this.state.favorites];
     this.setState({ favorites: _.pull(favorites, key) });
   };
-
   fetchCoins = async () => {
     let coinList = (await cc.coinList()).Data;
     this.setState({ coinList });
@@ -58,18 +55,14 @@ export class AppProvider extends React.Component {
 
     localStorage.setItem(
       "cryptodash",
-      JSON.stringify({ favorites: this.state.favorites })
+      JSON.stringify({ test: "hello", firstVisit: true })
     );
   };
   setPage = page => this.setState({ page });
 
   savedSettings = () => {
     let cryptoDashData = localStorage.getItem("cryptodash");
-    if (!cryptoDashData) {
-      return { page: "settings", firstVisit: true };
-    }
-    let { favorites } = cryptoDashData;
-    return { favorites };
+    return !cryptoDashData ? { page: "settings", firstVisit: true } : {};
   };
 
   render() {
