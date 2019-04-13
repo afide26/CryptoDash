@@ -1,15 +1,16 @@
 import styled from "styled-components";
-import { fontSize1 } from "../Settings/Styles";
 import {
+  fontSize1,
   subtleBoxShadow,
   lightBlueBackground,
-  greenBoxShadow
+  greenBoxShadow,
+  redBoxShadow
 } from "../Settings/Styles";
 
 export const Tile = styled.div`
   ${fontSize1}
   padding: 10px;
-  text-align: center;
+  text-align: left;
   ${subtleBoxShadow}
   ${lightBlueBackground}
 `;
@@ -19,4 +20,16 @@ export const SelectableTile = styled(Tile)`
     ${greenBoxShadow}
     cursor:pointer;
   }
+`;
+
+export const DeletableTile = styled(SelectableTile)`
+  &:hover {
+    cursor: pointer;
+    ${redBoxShadow}
+  }
+`;
+
+export const DisabledTile = styled(Tile)`
+  pointer-events: none;
+  opacity: 0.4;
 `;
