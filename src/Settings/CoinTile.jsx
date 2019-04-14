@@ -6,11 +6,7 @@ import CoinImage from "./CoinImage";
 export default function({ coinKey, topSection }) {
   return (
     <AppContext.Consumer>
-<<<<<<< HEAD
       {({ coinList, addCoin, removeCoin, isInFavorites }) => {
-=======
-      {({ coinList }) => {
->>>>>>> d743240176c265bbd5947efa309076fa69d763bf
         let coin = coinList[coinKey];
         let TileClass = SelectableTile;
         if (topSection) {
