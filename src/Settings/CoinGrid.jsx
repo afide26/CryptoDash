@@ -29,9 +29,13 @@ export default function({ topSection }) {
             topSection,
             favorites,
             filteredCoins
-          ).map((coinKey, index) => {
+          ).map(coinKey => {
             return (
-              <CoinTile topSection={topSection} key={index} coinKey={coinKey} />
+              <CoinTile
+                topSection={topSection}
+                key={coinKey}
+                coinKey={coinKey}
+              />
             );
           })}
         </CoinGridStyled>
