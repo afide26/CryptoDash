@@ -22,7 +22,7 @@ export class AppProvider extends React.Component {
 
   componentDidMount() {
     this.fetchCoins();
-    console.log(this.state);
+    this.fetchPrices();
   }
 
   // Add and Remove Coins
@@ -49,11 +49,36 @@ export class AppProvider extends React.Component {
     let coinList = (await cc.coinList()).Data;
     this.setState({ coinList });
   };
+
+  fetchPrices = async () => {
+    if (this.state.firsVisit) return;
+    let prices = await this.prices();
+    console.log(prices);
+    this.setState({ prices });
+  };
+
+  prices = async () => {
+    let returnData = [];
+    for (let i = 0; i < this.state.favorites.length; i++) {
+      try {
+        let priceData = await cc.priceFull(this.state.favorites[i], "AUD");
+        returnData.push(priceData);
+      } catch (e) {
+        console.warn("Fetch price error: ", e);
+      }
+    }
+    return returnData;
+  };
   confirmFavorites = () => {
-    this.setState({
-      firstVisit: false,
-      page: "dashboard"
-    });
+    this.setState(
+      {
+        firstVisit: false,
+        page: "dashboard"
+      },
+      () => {
+        this.fetchPrices();
+      }
+    );
 
     localStorage.setItem(
       "cryptodash",
