@@ -1,5 +1,5 @@
 import React from "react";
-import _ from "lodash";
+import _ from 'lodash';
 export const AppContext = React.createContext();
 const cc = require("cryptocompare");
 
