@@ -2,7 +2,7 @@ import React from "react";
 import { AppContext } from "../App/AppProvider";
 import { SelectableTile, DisabledTile, DeletableTile } from "../Shared/Tile";
 import CoinHeaderGrid from "./CoinHeaderGrid";
-import CoinImage from "./CoinImage";
+import CoinImage from "../Shared/CoinImage";
 
 // Add a ClickCoin Handler function
 function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
