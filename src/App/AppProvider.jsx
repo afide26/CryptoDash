@@ -1,9 +1,10 @@
 import React from "react";
-import _ from 'lodash';
+import _ from "lodash";
 export const AppContext = React.createContext();
 const cc = require("cryptocompare");
 
 const MAX_COIN = 10;
+
 export class AppProvider extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +17,8 @@ export class AppProvider extends React.Component {
       addCoin: this.addCoin,
       removeCoin: this.removeCoin,
       isInFavorites: this.isInFavorites,
-      setFilteredCoins: this.setFilteredCoins
+      setFilteredCoins: this.setFilteredCoins,
+      setCurrentFavorite: this.setCurrentFavorite
     };
   }
 
@@ -69,11 +71,25 @@ export class AppProvider extends React.Component {
     }
     return returnData;
   };
+
+  setCurrentFavorite = sym => {
+    this.setState({ currentFavorite: sym });
+
+    localStorage.setItem(
+      "cryptodash",
+      JSON.stringify({
+        ...JSON.parse(localStorage.getItem("cryptodash")),
+        currentFavorite: sym
+      })
+    );
+  };
   confirmFavorites = () => {
+    let currentFavorite = this.state.favorites[0];
     this.setState(
       {
         firstVisit: false,
-        page: "dashboard"
+        page: "dashboard",
+        currentFavorite
       },
       () => {
         this.fetchPrices();
@@ -82,7 +98,7 @@ export class AppProvider extends React.Component {
 
     localStorage.setItem(
       "cryptodash",
-      JSON.stringify({ favorites: this.state.favorites })
+      JSON.stringify({ favorites: this.state.favorites, currentFavorite })
     );
   };
 
@@ -92,8 +108,8 @@ export class AppProvider extends React.Component {
       return { page: "settings", firstVisit: true };
     }
     // Override the default favorites
-    let { favorites } = JSON.parse(cryptoDashData);
-    return { favorites };
+    let { favorites, currentFavorite } = JSON.parse(cryptoDashData);
+    return { favorites, currentFavorite };
   };
 
   setPage = page => this.setState({ page });

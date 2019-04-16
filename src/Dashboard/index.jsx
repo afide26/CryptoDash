@@ -4,7 +4,7 @@ import PriceGrid from "./PriceGrid";
 export default function() {
   return (
     <Page name="dashboard">
-      <h1>I'm Dashboard</h1>
+      <h1>Click on any of the coins to set as favorite:</h1>
       <PriceGrid />
     </Page>
   );
