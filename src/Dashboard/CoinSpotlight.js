@@ -15,7 +15,7 @@ export default function() {
       {({ currentFavorite, coinList }) => (
         <Tile>
           <SpotlightName>
-            Hello {coinList[currentFavorite].CoinName}{" "}
+            Hello {coinList[currentFavorite].CoinName}
           </SpotlightName>
           <CoinImage coin={coinList[currentFavorite]} spotlight />
         </Tile>

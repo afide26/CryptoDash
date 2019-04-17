@@ -1,9 +1,11 @@
 import React from "react";
 import _ from "lodash";
+import moment from "moment";
 export const AppContext = React.createContext();
 const cc = require("cryptocompare");
 
 const MAX_COIN = 10;
+const TIME_UNITS = 12;
 
 export class AppProvider extends React.Component {
   constructor(props) {
@@ -25,6 +27,8 @@ export class AppProvider extends React.Component {
   componentDidMount() {
     this.fetchCoins();
     this.fetchPrices();
+    this.fetchHistorical();
+    console.log(this.state);
   }
 
   // Add and Remove Coins
@@ -55,8 +59,24 @@ export class AppProvider extends React.Component {
   fetchPrices = async () => {
     if (this.state.firsVisit) return;
     let prices = await this.prices();
-    console.log(prices);
     this.setState({ prices });
+  };
+
+  fetchHistorical = async () => {
+    if (this.state.firstVisit) return;
+    let results = await this.historical();
+    let historical = [
+      {
+        name: this.state.currentFavorite,
+        data: results.map((ticker, index) => [
+          moment()
+            .subtract({ months: TIME_UNITS - index })
+            .valueOf(),
+          ticker.AUD
+        ])
+      }
+    ];
+    this.setState({ historical });
   };
 
   prices = async () => {
@@ -72,8 +92,27 @@ export class AppProvider extends React.Component {
     return returnData;
   };
 
+  historical = () => {
+    let promises = [];
+    for (let units = TIME_UNITS; units > 0; units--) {
+      promises.push(
+        cc.priceHistorical(
+          this.state.currentFavorite,
+          ["AUD"],
+          moment()
+            .subtract({ months: units })
+            .toDate()
+        )
+      );
+    }
+    return Promise.all(promises);
+  };
+
   setCurrentFavorite = sym => {
-    this.setState({ currentFavorite: sym });
+    this.setState(
+      { currentFavorite: sym, historical: null },
+      this.fetchHistorical
+    );
 
     localStorage.setItem(
       "cryptodash",
@@ -89,10 +128,13 @@ export class AppProvider extends React.Component {
       {
         firstVisit: false,
         page: "dashboard",
-        currentFavorite
+        currentFavorite,
+        prices: null,
+        historical: null
       },
       () => {
         this.fetchPrices();
+        this.fetchHistorical();
       }
     );
 
