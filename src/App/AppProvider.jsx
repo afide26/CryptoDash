@@ -5,7 +5,7 @@ export const AppContext = React.createContext();
 const cc = require("cryptocompare");
 
 const MAX_COIN = 10;
-const TIME_UNITS = 12;
+const TIME_UNITS = 10;
 
 export class AppProvider extends React.Component {
   constructor(props) {
@@ -13,6 +13,7 @@ export class AppProvider extends React.Component {
     this.state = {
       page: "dashboard",
       favorites: ["BTC", "ETH", "XMR", "ETC", "DOGE"],
+      timeInterval: "months",
       ...this.savedSettings(),
       setPage: this.setPage,
       confirmFavorites: this.confirmFavorites,
@@ -20,7 +21,8 @@ export class AppProvider extends React.Component {
       removeCoin: this.removeCoin,
       isInFavorites: this.isInFavorites,
       setFilteredCoins: this.setFilteredCoins,
-      setCurrentFavorite: this.setCurrentFavorite
+      setCurrentFavorite: this.setCurrentFavorite,
+      changeChartSelect: this.changeChartSelect
     };
   }
 
@@ -70,7 +72,7 @@ export class AppProvider extends React.Component {
         name: this.state.currentFavorite,
         data: results.map((ticker, index) => [
           moment()
-            .subtract({ months: TIME_UNITS - index })
+            .subtract({ [this.state.timeInterval]: TIME_UNITS - index })
             .valueOf(),
           ticker.AUD
         ])
@@ -100,7 +102,7 @@ export class AppProvider extends React.Component {
           this.state.currentFavorite,
           ["AUD"],
           moment()
-            .subtract({ months: units })
+            .subtract({ [this.state.timeInterval]: units })
             .toDate()
         )
       );
@@ -144,6 +146,13 @@ export class AppProvider extends React.Component {
     );
   };
 
+  changeChartSelect = value => {
+    this.setState(
+      { timeInteval: value, historical: null },
+      this.fetchHistorical
+    );
+    console.log("Historical", this.state.historical);
+  };
   savedSettings = () => {
     let cryptoDashData = localStorage.getItem("cryptodash");
     if (!cryptoDashData) {

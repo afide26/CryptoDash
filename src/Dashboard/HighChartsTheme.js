@@ -1,3 +1,6 @@
+import {
+  lightTheme
+} from '../Settings/Styles'
 export default {
   colors: [
     '#61d936',
@@ -10,7 +13,7 @@ export default {
     '#1B2839',
   ],
   chart: {
-    backgroundColor: '#061a44',
+    backgroundColor: lightTheme ? 'white' : '#061a44',
     stops: [
       [0, 'rgb(48, 48, 96)'],
       [1, 'rgb(0, 0, 0)']
@@ -18,8 +21,8 @@ export default {
   },
   title: {
     style: {
-      color: '#C0C0C0',
-      font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+      color: lightTheme ? '#061a44' : '#C0C0C0',
+      font: 'bold 16px "Arial", Helvetica, sans-serif'
     }
   },
   subtitle: {
