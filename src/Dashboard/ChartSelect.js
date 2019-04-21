@@ -3,6 +3,7 @@ import {
   backgroundColor2,
   fontSize2
 } from '../Settings/Styles'
+
 export default styled.select `
 ${backgroundColor2}
 color:#1163c9;

@@ -12,7 +12,7 @@ export class AppProvider extends React.Component {
     super(props);
     this.state = {
       page: "dashboard",
-      favorites: ["BTC", "ETH", "XMR", "ETC", "DOGE"],
+      favorites: ["TRX", "ETH", "XMR", "ETC", "DOGE"],
       timeInterval: "months",
       ...this.savedSettings(),
       setPage: this.setPage,
@@ -27,6 +27,7 @@ export class AppProvider extends React.Component {
   }
 
   componentDidMount() {
+    document.title = "Welcome to CryptoDash";
     this.fetchCoins();
     this.fetchPrices();
     this.fetchHistorical();
@@ -148,7 +149,7 @@ export class AppProvider extends React.Component {
 
   changeChartSelect = value => {
     this.setState(
-      { timeInteval: value, historical: null },
+      { timeInterval: value, historical: null },
       this.fetchHistorical
     );
     console.log("Historical", this.state.historical);
