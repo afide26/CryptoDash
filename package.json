@@ -2,6 +2,7 @@
   "name": "cryptodash",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://afide26.github.io/slack-redux/",
   "dependencies": {
     "cryptocompare": "^1.0.0",
     "fuzzy": "^0.1.3",
